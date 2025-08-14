@@ -32,6 +32,6 @@ shadow_enabled = true
 [node name="Player" parent="." instance=ExtResource("2_y7rda")]
 [node name="InteractionController" type="Node" parent="."]
 script = ExtResource("3_pqv0j")
-terrain_path = NodePath(".")
-player_path = NodePath("Player")
-camera_path = NodePath("Player/Camera3D")
+terrain_path = NodePath("..")
+player_path = NodePath("../Player")
+camera_path = NodePath("../Player/Camera3D")
