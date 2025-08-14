@@ -22,3 +22,8 @@ project/assembly_name="ClaudeCodeTranslation"
 [global_group]
 
 Interactable="Interactable object"
+Pickup="Item pickup"
+
+[input]
+
+inventory={"deadzone":0.5,"events":[{"type":"key","keycode":73}]}

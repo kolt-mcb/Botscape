@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2]
+[ext_resource type="Script" path="res://item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="2"]
+
+[resource]
+script = ExtResource("1")
+name = "Wood"
+icon = ExtResource("2")

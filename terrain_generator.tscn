@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://yaiwisaay14y"]
+[gd_scene load_steps=11 format=3 uid="uid://yaiwisaay14y"]
 
 [ext_resource type="Script" uid="uid://cnkojmcv7afbe" path="res://terrain_generator.gd" id="1_wc7r7"]
 [ext_resource type="PackedScene" uid="uid://b5sbv81foeoy2" path="res://tree.tscn" id="2_vg2ls"]
 [ext_resource type="PackedScene" uid="uid://tvjj76iceovt" path="res://player.tscn" id="2_y7rda"]
 [ext_resource type="Script" uid="uid://pqv0jvqn2d8s" path="res://interaction_controller.gd" id="3_pqv0j"]
+[ext_resource type="Script" path="res://inventory.gd" id="4_inv"]
+[ext_resource type="PackedScene" path="res://inventory_ui.tscn" id="5_ui"]
+[ext_resource type="PackedScene" path="res://item_pickup.tscn" id="6_pick"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wc7r7"]
 sky_top_color = Color(0.357247, 0.524792, 0.750752, 1)
@@ -35,3 +38,13 @@ script = ExtResource("3_pqv0j")
 terrain_path = NodePath("..")
 player_path = NodePath("../Player")
 camera_path = NodePath("../Player/Camera3D")
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("4_inv")
+player_path = NodePath("../Player")
+pickup_scene = ExtResource("6_pick")
+
+[node name="InventoryUI" parent="." instance=ExtResource("5_ui")]
+
+[node name="WoodPickup" parent="." instance=ExtResource("6_pick")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
