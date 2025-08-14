@@ -76,19 +76,6 @@ func move_to(destination: Vector3):
 	
 	set_current_target()
 
-# func smooth_snap_to_terrain(delta: float):
-# 	"""Smoothly snap character to terrain height"""
-# 	if not terrain_generator:
-# 		return
-	
-# 	var grid_pos = pathfinder.world_to_grid(global_position)
-	
-# 	if pathfinder.is_valid_grid_pos(grid_pos):
-# 		var tile = terrain_generator.tile_data[grid_pos.x][grid_pos.y]
-# 		if tile:
-# 			var target_y = tile.world_position.y
-# 			global_position.y = lerp(global_position.y, target_y, 10.0 * delta)
-
 func set_current_target():
 	"""Set the current waypoint as the target"""
 	if current_path_index < current_path.size():
@@ -108,7 +95,6 @@ func finish_movement():
 	movement_finished.emit()
 
 func _physics_process(delta):
-	# smooth_snap_to_terrain(delta)
 
 	if not is_moving or current_path.size() == 0:
 		return
@@ -164,11 +150,6 @@ func start_cutting_tree(tree):
 	await get_tree().create_timer(2.0).timeout
 	# Start cutting animation/timer
 	print("Tree cutting started...")
-	# await animation_player.animation_finished
-	# animation_player.play("Sword_Attack")
-	# await animation_player.animation_finished
-	# animation_player.play("Sword_Attack")
-	# await animation_player.animation_finished
 
 	# For now, just wait a bit then remove the tree
 	finish_cutting_tree()
