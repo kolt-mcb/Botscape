@@ -69,9 +69,25 @@ func handle_mouse_click(mouse_pos: Vector2):
 	query.from = from
 	query.to = to
 	query.collision_mask = 1
-	
+	query.collide_with_areas = true
+
 	var result = space_state.intersect_ray(query)
-	
+
+	if result and result.collider.is_in_group("Item"):
+		print("Clicked on item at:", result.collider.global_position)
+		var item_pos = result.collider.global_position
+		var path = player.pathfinder.find_path(player.global_position, item_pos)
+		print("Path found with", path.size(), "waypoints")
+		if path.size() > 0:
+			update_tile_indicator(item_pos)
+			player.call("move_to", item_pos)
+			await player.movement_finished
+		if player.global_position.distance_to(item_pos) < 1.5:
+			result.collider.pick_up(player)
+		else:
+			print("Item out of reach")
+	return
+
 	# First check for interactable objects (trees)
 	if result and result.collider.is_in_group("Interactable"):
 		print("Clicked on interactable at:", result.collider.global_position)

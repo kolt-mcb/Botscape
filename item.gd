@@ -6,9 +6,8 @@ extends Area3D
 func _ready() -> void:
     if data:
         $Sprite3D.texture = data.icon
-    body_entered.connect(_on_body_entered)
 
-func _on_body_entered(body: Node) -> void:
-    if body.has_method("pick_up_item"):
-        body.pick_up_item(self)
+func pick_up(player: Node) -> void:
+    if player.has_method("pick_up_item"):
+        player.pick_up_item(self)
         queue_free()
