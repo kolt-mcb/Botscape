@@ -24,9 +24,10 @@ func setup_slots():
         grid.add_child(btn)
         slots.append(btn)
 
-func _process(_delta):
-    if Input.is_action_just_pressed("inventory"):
+func _unhandled_input(event: InputEvent):
+    if event.is_action_pressed("inventory"):
         panel.visible = not panel.visible
+        event.accept()
 
 func update_slots():
     for i in range(slot_count):

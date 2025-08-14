@@ -1,11 +1,16 @@
 extends SceneTree
 
 func _init():
-    var file = FileAccess.open("res://icon.svg", FileAccess.READ)
-    if file == null:
-        push_error("Failed to open icon")
-        quit(1)
-    else:
-        file.close()
-        print("Resource opened successfully")
-        quit(0)
+    var paths = [
+        "res://icon.svg",
+        "res://items/wood.tres",
+        "res://item_pickup.tscn",
+    ]
+    for p in paths:
+        var f = FileAccess.open(p, FileAccess.READ)
+        if f == null:
+            push_error("Failed to open %s" % p)
+            quit(1)
+        f.close()
+    print("Resources opened successfully")
+    quit(0)

@@ -34,13 +34,13 @@ func _process(delta):
 	position_camera(false, delta)
 
 func _unhandled_input(event):
-        if event is InputEventMouseButton:
-                if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-                        distance = max(min_distance, distance - scroll_zoom_speed)
-                elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-                        distance = min(max_distance, distance + scroll_zoom_speed)
-                elif event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-                        left_click.emit(event.position)
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			distance = max(min_distance, distance - scroll_zoom_speed)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			distance = min(max_distance, distance + scroll_zoom_speed)
+		elif event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			left_click.emit(event.position)
 
 func position_camera(force: bool = false, delta := 0.0):
 	var offset = Vector3(
