@@ -12,21 +12,22 @@ var current_path_index: int = 0
 var target_position: Vector3
 var is_moving: bool = false
 var current_tree = null
+var inventory: Inventory = Inventory.new()
 
 @onready var terrain_generator = get_parent()
 @onready var rig = $Rig
 @onready var animation_player = $AnimationPlayer
 
 func _ready():
-	animation_player.play("Idle")
-	pathfinder = Pathfinder.new()
-	
-	await get_tree().process_frame
-	pathfinder.setup(terrain_generator)
-	
-	snap_to_terrain()
-	
-	print("Player ready, pathfinder initialized")
+        animation_player.play("Idle")
+        pathfinder = Pathfinder.new()
+
+        await get_tree().process_frame
+        pathfinder.setup(terrain_generator)
+
+        snap_to_terrain()
+
+        print("Player ready, pathfinder initialized")
 
 # Method 1A: Use terrain tile data directly
 func snap_to_terrain():
@@ -155,12 +156,16 @@ func start_cutting_tree(tree):
 	finish_cutting_tree()
 
 func finish_cutting_tree():
-	"""Complete tree cutting"""
-	if current_tree:
-		print("Tree cut down!")
-		current_tree.queue_free()
-		current_tree = null
-		animation_player.play("Idle")
+        """Complete tree cutting"""
+        if current_tree:
+                print("Tree cut down!")
+                current_tree.queue_free()
+                current_tree = null
+                animation_player.play("Idle")
+
+func pick_up_item(item) -> void:
+        inventory.add_item(item.item_name, item.icon, item.quantity)
+        print("Picked up %s" % item.item_name)
 
 # Debug functions
 func get_current_path() -> Array:
