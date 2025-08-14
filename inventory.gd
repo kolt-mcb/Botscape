@@ -19,3 +19,13 @@ func get_quantity(name: String) -> int:
 
 func get_items() -> Dictionary:
     return items.duplicate(true)
+
+func get_item_data(name: String) -> Dictionary:
+    return items.get(name, {})
+
+func remove_item(name: String, quantity: int = 1) -> void:
+    if not items.has(name):
+        return
+    items[name]["quantity"] -= quantity
+    if items[name]["quantity"] <= 0:
+        items.erase(name)

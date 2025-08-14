@@ -5,6 +5,7 @@ extends Area3D
 @export var quantity: int = 1
 
 func _ready() -> void:
+    $Sprite3D.texture = icon
     body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node) -> void:
