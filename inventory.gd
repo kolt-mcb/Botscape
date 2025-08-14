@@ -1,31 +1,22 @@
 extends Node
 class_name Inventory
 
-var items: Dictionary = {}
+const ItemData = preload("res://item_data.gd")
 
-func add_item(name: String, icon: Texture2D, quantity: int = 1) -> void:
-    if items.has(name):
-        items[name]["quantity"] += quantity
-    else:
-        items[name] = {
-            "icon": icon,
-            "quantity": quantity,
-        }
+var items: Dictionary = {}  # key: ItemData, value: int quantity
 
-func get_quantity(name: String) -> int:
-    if items.has(name):
-        return items[name]["quantity"]
-    return 0
+func add_item(data: ItemData, quantity: int = 1) -> void:
+    items[data] = items.get(data, 0) + quantity
+
+func get_quantity(data: ItemData) -> int:
+    return items.get(data, 0)
 
 func get_items() -> Dictionary:
     return items.duplicate(true)
 
-func get_item_data(name: String) -> Dictionary:
-    return items.get(name, {})
-
-func remove_item(name: String, quantity: int = 1) -> void:
-    if not items.has(name):
+func remove_item(data: ItemData, quantity: int = 1) -> void:
+    if not items.has(data):
         return
-    items[name]["quantity"] -= quantity
-    if items[name]["quantity"] <= 0:
-        items.erase(name)
+    items[data] -= quantity
+    if items[data] <= 0:
+        items.erase(data)

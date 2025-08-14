@@ -1,11 +1,11 @@
 extends Area3D
 
-@export var item_name: String = "Generic Item"
-@export var icon: Texture2D = preload("res://item_icon.svg")
+@export var data: ItemData
 @export var quantity: int = 1
 
 func _ready() -> void:
-    $Sprite3D.texture = icon
+    if data:
+        $Sprite3D.texture = data.icon
     body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node) -> void:

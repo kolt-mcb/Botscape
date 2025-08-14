@@ -14,6 +14,7 @@ var is_moving: bool = false
 var current_tree = null
 var inventory: Inventory = Inventory.new()
 var inventory_panel: InventoryPanel
+const ItemData = preload("res://item_data.gd")
 
 @onready var terrain_generator = get_parent()
 @onready var rig = $Rig
@@ -180,30 +181,28 @@ func finish_cutting_tree():
                 animation_player.play("Idle")
 
 func pick_up_item(item) -> void:
-        inventory.add_item(item.item_name, item.icon, item.quantity)
-        print("Picked up %s" % item.item_name)
+        inventory.add_item(item.data, item.quantity)
+        print("Picked up %s" % item.data.name)
         if inventory_panel and inventory_panel.visible:
                 inventory_panel.update_inventory(inventory)
 
-func use_item(name: String) -> void:
-        if inventory.get_quantity(name) > 0:
-                inventory.remove_item(name, 1)
-                print("Used %s" % name)
+func use_item(data: ItemData) -> void:
+        if inventory.get_quantity(data) > 0:
+                inventory.remove_item(data, 1)
+                print("Used %s" % data.name)
                 if inventory_panel and inventory_panel.visible:
                         inventory_panel.update_inventory(inventory)
 
-func drop_item(name: String) -> void:
-        if inventory.get_quantity(name) <= 0:
+func drop_item(data: ItemData) -> void:
+        if inventory.get_quantity(data) <= 0:
                 return
-        var data = inventory.get_item_data(name)
         var item_scene = preload("res://item.tscn")
         var dropped = item_scene.instantiate()
-        dropped.item_name = name
-        dropped.icon = data.get("icon")
+        dropped.data = data
         dropped.quantity = 1
         dropped.global_position = global_position + Vector3(0.5, 0, 0.5)
         get_parent().add_child(dropped)
-        inventory.remove_item(name, 1)
+        inventory.remove_item(data, 1)
         if inventory_panel and inventory_panel.visible:
                 inventory_panel.update_inventory(inventory)
 

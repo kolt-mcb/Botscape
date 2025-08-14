@@ -20,6 +20,7 @@ var tile_data: Array = []
 
 const Tile = preload("res://tile.gd")
 const ItemScene = preload("res://item.tscn")
+const CoinData = preload("res://items/gold_coin.tres")
 
 func _ready():
         debug_print("=== TERRAIN GENERATOR STARTING ===")
@@ -36,7 +37,7 @@ func spawn_demo_items():
         if not player:
                 return
         var item = ItemScene.instantiate()
-        item.item_name = "Gold Coin"
+        item.data = CoinData
         item.quantity = 5
         add_child(item)
         item.global_position = player.global_position + Vector3(2, 0, 0)
