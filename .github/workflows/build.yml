@@ -14,9 +14,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y dotnet-sdk-8.0 unzip wget
-          wget https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_mono_linux_x86_64.zip -O /tmp/godot_mono.zip
+          wget https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_mono_linux_x86_64.zip -O /tmp/godot_mono.zip
           unzip /tmp/godot_mono.zip -d /opt/godot
-          sudo ln -s /opt/godot/Godot_v4.2.1-stable_mono_linux_x86_64/Godot_v4.2.1-stable_mono_linux.x86_64 /usr/local/bin/godot
+          sudo ln -s /opt/godot/Godot_v4.4.1-stable_mono_linux_x86_64/Godot_v4.4.1-stable_mono_linux.x86_64 /usr/local/bin/godot
           godot --version
       - name: Resource loading test
         run: |
@@ -31,14 +31,14 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y dotnet-sdk-8.0 unzip wget
-          wget https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_mono_linux_x86_64.zip -O /tmp/godot_mono.zip
+          wget https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_mono_linux_x86_64.zip -O /tmp/godot_mono.zip
           unzip /tmp/godot_mono.zip -d /opt/godot
-          sudo ln -s /opt/godot/Godot_v4.2.1-stable_mono_linux_x86_64/Godot_v4.2.1-stable_mono_linux.x86_64 /usr/local/bin/godot
-          wget https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_mono_export_templates.tpz -O /tmp/godot_templates.tpz
-          mkdir -p ~/.local/share/godot/export_templates/4.2.1.stable.mono
-          unzip /tmp/godot_templates.tpz -d ~/.local/share/godot/export_templates/4.2.1.stable.mono
-          mv ~/.local/share/godot/export_templates/4.2.1.stable.mono/templates/* ~/.local/share/godot/export_templates/4.2.1.stable.mono/
-          rmdir ~/.local/share/godot/export_templates/4.2.1.stable.mono/templates
+          sudo ln -s /opt/godot/Godot_v4.4.1-stable_mono_linux_x86_64/Godot_v4.4.1-stable_mono_linux.x86_64 /usr/local/bin/godot
+          wget https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_mono_export_templates.tpz -O /tmp/godot_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.4.1.stable.mono
+          unzip /tmp/godot_templates.tpz -d ~/.local/share/godot/export_templates/4.4.1.stable.mono
+          mv ~/.local/share/godot/export_templates/4.4.1.stable.mono/templates/* ~/.local/share/godot/export_templates/4.4.1.stable.mono/
+          rmdir ~/.local/share/godot/export_templates/4.4.1.stable.mono/templates
           godot --version
       - name: Export
         run: |
