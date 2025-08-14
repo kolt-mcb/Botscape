@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://yaiwisaay14y"]
+[gd_scene load_steps=8 format=3 uid="uid://yaiwisaay14y"]
 
 [ext_resource type="Script" uid="uid://cnkojmcv7afbe" path="res://terrain_generator.gd" id="1_wc7r7"]
 [ext_resource type="PackedScene" uid="uid://b5sbv81foeoy2" path="res://tree.tscn" id="2_vg2ls"]
 [ext_resource type="PackedScene" uid="uid://tvjj76iceovt" path="res://player.tscn" id="2_y7rda"]
+[ext_resource type="Script" uid="uid://pqv0jvqn2d8s" path="res://interaction_controller.gd" id="3_pqv0j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wc7r7"]
 sky_top_color = Color(0.357247, 0.524792, 0.750752, 1)
@@ -29,3 +30,8 @@ environment = SubResource("Environment_y7rda")
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_y7rda")]
+[node name="InteractionController" type="Node" parent="."]
+script = ExtResource("3_pqv0j")
+terrain_path = NodePath("..")
+player_path = NodePath("../Player")
+camera_path = NodePath("../Player/Camera3D")

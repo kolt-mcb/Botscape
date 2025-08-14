@@ -10,11 +10,9 @@ extends Camera3D
 @export var max_distance: float = 25.0
 @export var follow_smoothness: float = 5.0
 
-@onready var terrain = get_parent().get_parent()
-@onready var player = get_parent()
-@onready var tile_indicator_scene = preload("res://tile_indicator.tscn")
+signal left_click(position: Vector2)
 
-var tile_indicator: Node3D = null
+@onready var player = get_parent()
 var angle: float = 0.0
 var current_position: Vector3
 
@@ -36,13 +34,13 @@ func _process(delta):
 	position_camera(false, delta)
 
 func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			distance = max(min_distance, distance - scroll_zoom_speed)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			distance = min(max_distance, distance + scroll_zoom_speed)
-		elif event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			handle_mouse_click(event.position)
+        if event is InputEventMouseButton:
+                if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+                        distance = max(min_distance, distance - scroll_zoom_speed)
+                elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+                        distance = min(max_distance, distance + scroll_zoom_speed)
+                elif event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+                        left_click.emit(event.position)
 
 func position_camera(force: bool = false, delta := 0.0):
 	var offset = Vector3(
@@ -59,6 +57,7 @@ func position_camera(force: bool = false, delta := 0.0):
 
 	global_position = current_position
 	look_at(player.global_position, Vector3.UP)
+
 
 func handle_mouse_click(mouse_pos: Vector2):
 	print("=== Mouse Click Debug ===")
