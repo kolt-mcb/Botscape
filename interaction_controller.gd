@@ -26,7 +26,13 @@ func handle_mouse_click(mouse_pos: Vector2):
 
         var result = space_state.intersect_ray(query)
 
-        # First check for interactable objects (trees)
+        # Check for item pickups first
+        if result and result.collider.is_in_group("Pickup"):
+                if result.collider.has_method("pick_up"):
+                        result.collider.pick_up()
+                return
+
+        # Then check for interactable objects (trees)
         if result and result.collider.is_in_group("Interactable"):
                 print("Clicked on interactable at:", result.collider.global_position)
                 print("Player position:", player.global_position)
