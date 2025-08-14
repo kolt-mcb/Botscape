@@ -3,6 +3,8 @@ class_name Inventory
 
 signal inventory_changed
 
+const ItemData = preload("res://item_data.gd")
+
 @export var player_path: NodePath
 @export var pickup_scene: PackedScene
 

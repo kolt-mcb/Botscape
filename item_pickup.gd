@@ -1,5 +1,7 @@
 extends Area3D
 
+const ItemData = preload("res://item_data.gd")
+
 @export var item: ItemData
 @onready var sprite: Sprite3D = $Sprite3D
 
