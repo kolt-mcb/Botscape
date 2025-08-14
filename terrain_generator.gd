@@ -23,9 +23,9 @@ const ItemScene = preload("res://item.tscn")
 const CoinData = preload("res://items/gold_coin.tres")
 
 func _ready():
-        debug_print("=== TERRAIN GENERATOR STARTING ===")
-        generate_terrain()
-        spawn_demo_items()
+	debug_print("=== TERRAIN GENERATOR STARTING ===")
+	generate_terrain()
+	call_deferred("spawn_demo_items")
 
 func _input(event):
         if event.is_action_pressed("ui_accept"): # Space
@@ -33,14 +33,19 @@ func _input(event):
                 regenerate_terrain()
 
 func spawn_demo_items():
-        var player = get_node_or_null("Player")
-        if not player:
-                return
-        var item = ItemScene.instantiate()
-        item.data = CoinData
-        item.quantity = 5
-        add_child(item)
-        item.global_position = player.global_position + Vector3(2, 0, 0)
+	var player = get_node_or_null("Player")
+	if not player:
+		return
+	var player_grid = Vector2i(int(floor(player.global_position.x / tile_size)), int(floor(player.global_position.z / tile_size)))
+	var target_grid = player_grid + Vector2i(1, 0)
+	if target_grid.x < 0 or target_grid.y < 0 or target_grid.x >= terrain_width or target_grid.y >= terrain_height:
+		return
+	var tile = tile_data[target_grid.x][target_grid.y]
+	var item = ItemScene.instantiate()
+	item.data = CoinData
+	item.quantity = 5
+	add_child(item)
+	item.global_position = tile.world_position
 
 func generate_terrain():
 	debug_print("Generating terrain...")
