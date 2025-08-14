@@ -19,15 +19,27 @@ var tile_map: Dictionary = {}
 var tile_data: Array = []
 
 const Tile = preload("res://tile.gd")
+const ItemScene = preload("res://item.tscn")
 
 func _ready():
-	debug_print("=== TERRAIN GENERATOR STARTING ===")
-	generate_terrain()
+        debug_print("=== TERRAIN GENERATOR STARTING ===")
+        generate_terrain()
+        spawn_demo_items()
 
 func _input(event):
-	if event.is_action_pressed("ui_accept"): # Space
-		debug_print("=== REGENERATING TERRAIN ===")
-		regenerate_terrain()
+        if event.is_action_pressed("ui_accept"): # Space
+                debug_print("=== REGENERATING TERRAIN ===")
+                regenerate_terrain()
+
+func spawn_demo_items():
+        var player = get_node_or_null("Player")
+        if not player:
+                return
+        var item = ItemScene.instantiate()
+        item.item_name = "Gold Coin"
+        item.quantity = 5
+        add_child(item)
+        item.global_position = player.global_position + Vector3(2, 0, 0)
 
 func generate_terrain():
 	debug_print("Generating terrain...")

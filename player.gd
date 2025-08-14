@@ -13,12 +13,19 @@ var target_position: Vector3
 var is_moving: bool = false
 var current_tree = null
 var inventory: Inventory = Inventory.new()
+var inventory_panel: InventoryPanel
 
 @onready var terrain_generator = get_parent()
 @onready var rig = $Rig
 @onready var animation_player = $AnimationPlayer
 
 func _ready():
+        if not InputMap.has_action("ui_toggle_inventory"):
+                InputMap.add_action("ui_toggle_inventory")
+                var key_event = InputEventKey.new()
+                key_event.physical_keycode = KEY_I
+                InputMap.action_add_event("ui_toggle_inventory", key_event)
+
         animation_player.play("Idle")
         pathfinder = Pathfinder.new()
 
@@ -28,6 +35,9 @@ func _ready():
         snap_to_terrain()
 
         print("Player ready, pathfinder initialized")
+
+        inventory_panel = preload("res://ui/inventory_panel.tscn").instantiate()
+        add_child(inventory_panel)
 
 # Method 1A: Use terrain tile data directly
 func snap_to_terrain():
@@ -129,7 +139,13 @@ func _physics_process(delta):
 			var target_rotation = atan2(direction.x, direction.z)
 			rig.rotation.y = lerp_angle(rig.rotation.y, target_rotation, delta * 10.0)
 	
-	move_and_slide()
+        move_and_slide()
+
+func _process(delta):
+        if Input.is_action_just_pressed("ui_toggle_inventory"):
+                inventory_panel.visible = not inventory_panel.visible
+                if inventory_panel.visible:
+                        inventory_panel.update_inventory(inventory)
 
 func start_cutting_tree(tree):
 	"""Start cutting a tree (stops current movement)"""
@@ -166,6 +182,8 @@ func finish_cutting_tree():
 func pick_up_item(item) -> void:
         inventory.add_item(item.item_name, item.icon, item.quantity)
         print("Picked up %s" % item.item_name)
+        if inventory_panel and inventory_panel.visible:
+                inventory_panel.update_inventory(inventory)
 
 # Debug functions
 func get_current_path() -> Array:
